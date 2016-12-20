@@ -1,0 +1,10 @@
+sudo yum update
+
+	   Then for Entermedia 9 version:
+	   	sudo yum install entermediadb_em9
+
+	   #For the latest master release (Entermedia 8):
+		sudo yum install entermediadb
+
+	   #Or for nightly build packages (development version):
+		sudo yum install entermediadb_dev
