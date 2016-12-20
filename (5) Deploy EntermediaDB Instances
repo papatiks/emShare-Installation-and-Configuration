@@ -1,0 +1,33 @@
+I. Install an instance of EnterMediaDB with the following command:
+		sudo entermediadb install
+
+	      You will be asked to provide the folder, data, and port number that will be used. You should not use any port number lower than 1034. Multiple EnterMedia instances cannot run on the same folder.
+	      
+	      The defaults are as follows:
+		port 8080
+		data at /media/data
+		application at /opt/entermediadb
+
+-------------------------------------------------------------------------
+
+	   II. Once the web server is installed, you will need to setup a firewall or nginx to forward port 80 to your chosen port. (You may skip this step)
+
+-------------------------------------------------------------------------
+
+	   III. To remove a site
+		sudo entermediadb delete /opt/entermediadb
+-------------------------------------------------------------------------
+
+
+	
+	   IV. To delete data
+		sudo rm -rf /media/data
+
+-------------------------------------------------------------------------
+
+
+
+	   V. To update the app (If creating a standalone system, you may skip this step)
+		sudo entermediadb update /opt/entermediadb
+
+-------------------------------------------------------------------------
