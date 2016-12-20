@@ -1,0 +1,136 @@
+6. EnterMedia has many dependencies and depening on what's installed on your system, you may need to install the following:
+
+	   I. Install ImageMagick via the epel repository
+
+	      Install the epel repository:
+		wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+		rpm -Uvh epel-release-6*.rpm
+
+	      Install the remi repository:
+		wget http://rpms.famillecolet.com/enterprise/remi-release-6.rpm
+		rpm -Uvh remi-release-6*.rpm
+
+	      Edit the remi repo
+		sudo nano /etc/yum.repos.d/remi.repo
+
+	      Change
+		enabled=0
+	
+	      To
+		enabled=1
+
+		Install the dependencies:
+			yum install -y gcc php-devel php-pear
+			yum install -y ImageMagick ImageMagick-devel ImageMagick-perl
+
+
+-------------------------------------------------------------------------
+
+
+
+	   II. Install from source code
+
+	      First, install dependencies:
+		yum -y groupinstall 'Development Tools'
+		yum -y install bzip2-devel freetype-devel libjpeg-devel libpng-devel libtiff-devel giflib-devel zlib-devel ghostscript-devel djvulibre-devel libwmf-devel jasper-devel libtool-ltdl-devel libX11-devel libXext-devel libXt-devel lcms-devel libxml2-devel librsvg2-devel OpenEXR-devel php-devel
+
+	      Fetch the source code:
+		wget http://www.imagemagick.org/download/ImageMagick.tar.gz
+		tar xvzf ImageMagick.tar.gz
+		cd ImageMagick*
+
+	      Configure and compile the source code:
+		./configure
+		make
+		make install
+
+	      Verify that the compile and install were successful:
+		convert --version
+
+	      Install PHP extension
+	      Install imagick PHP extension module imagick.so
+		peck install imagick
+
+	      If asked to provide the ImageMagick installation prefix, just press [ENTER] to auto detect. After pecl command, you may get the following error:
+		"Error shtool at '/var/tmpimagick/build/shtool' does not exist or is not executable. Make sure that the file exists and is executable and then rerun this script."
+
+	      To resolve this, you need to remove the /tmp line in /etc/fstab and reboot. Then run the pecl command again. Once the installation is completed, you may add the /tmp line back to /etc/fstab and reboot. If you use the umount command, it will not work if /tmp has the nosuid,noexec,nodev options.
+
+	      Next, add the imagick.so extension to the php.ini file.
+		php -i | grep "Loaded Configuration File"
+
+	      Edit the php.ini file and look for the dynamic extension section. Add extension=imagick.so then save.
+		php -i | grep "Loaded Configuration File"
+
+	      Check the php extension list to verify that imagick has installed correctly: 
+		php -m | grep imagick
+
+	      Restart the webserver
+		service httpd restart
+
+Database/Module Customizations
+	1. Settings -> Modules -> Add Module
+
+	Module Name:
+	Your Database's Name
+		
+	Module ID:
+	Your Database's Name but lowercase, singular, and with no spaces
+
+	Add New Modules:
+	Module Name, Module ID
+	Assignments, assignment
+	Services, service
+	Shortcodes, shortcode
+	TelCos, telco
+
+	Assignments:
+	Asset,service,id,telco,shortcode,from,to, keywords
+	filename.extension,service name,id,telco,shortcode,date,date,keywords
+	Sa Isang Sulyap Mo.mp3,CoolMP3,*unique string*,smart,206,8/30/16,9/28/16
+	
+	asset (data type: list, render type: auto complete keywords, sortable, searchable)
+	service (data type: list, render type: auto complete keywords, required, sortable, searchable)
+	id (data type: text, render type: default, sortable searchable)
+	telco (data type: list, render type: list, required, sortable, searchable)
+	service.shortcode (data type: search join, render type: default, required, sortable, searchable)
+	from (data type: date, render type: date, sortable, searchable)
+	to (data type: date, render type: date, sortable, searchable)
+keywords (data type: text, render type: tags , searchable )
+
+	Services:
+	id,name,schedule,scheduleurl,deploy url,shortcode,telco,keywords
+	shortcode-telco-service name,service name,path to sche  dule,path to deploy
+	234-Smart-ALLHITMUSIC15,ALLMUSIC15,sftp://...,sftp://...
+
+	id (data type: text, render type: default, required, sortable, searchable)
+	name (data type: text, render type: default, required, sortable, searchable)
+
+	Services URL:
+	Deploy URL (data type: text, render type: default, searchable)
+	Schedule URL (data type: text, render type: default, searchable)
+
+
+schedule (data type: text, render type: multi-select, required, sortable, searchable)
+shortcode (data type: list, render type: default, searchable)
+telco (data type: list, render type: list, searchable)
+keywords (data type: text, render type: tags, searchable)
+
+	Shortcode:
+	name,id,telco
+	shortcode,shortcode-telco,telco
+	239,239-Smart,Smart
+
+	name (data type: text, render type: default, required, sortable, searchable)
+	id (data type: text, render type: default, required, sortable, searchable)
+	telco (data type: list, render type: list, required, sortable, searchable)
+
+	TelCos:
+	name,id
+	telco name,id
+	Smart,smarttelco
+
+	name (data type: text, render type:default, searchable)
+	id (data type: text, render type: default)
+
+
