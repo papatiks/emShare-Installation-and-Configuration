@@ -1,0 +1,2 @@
+2. Determine CentOS version
+		cat /etc/redhat-release
