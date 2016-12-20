@@ -1,0 +1,10 @@
+sudo nano /etc/yum.repos.d/entermedia.repo
+		[entermediadb]
+		name=EnterMedia CentOS Dependencies
+		#CentOS 7
+		baseurl=http://packages.entermediadb.org/repo/centos/7/x86_64/rpms
+		# or CentOS 6
+		#baseurl=http://packages.entermediadb.org/repo/centos/6/x86_64/rpms
+		priority=1
+		enabled=1
+		gpgcheck=0
